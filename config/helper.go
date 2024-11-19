@@ -9,6 +9,7 @@ const (
 func Init(cfg ServiceConfig, serverName string) error {
 
 	loadInitConfig(cfg)
+	cfg.SetServiceName(serverName)
 
 	return nil
 }
