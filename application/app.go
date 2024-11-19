@@ -7,13 +7,13 @@ import (
 	gocfg "github.com/qthang02/goutil/config"
 )
 
-func Run(serviceName string, cfg gocfg.ServiceConfig, services ...gosrv.GoService) error {
+func Run(serviceName string, cfg gocfg.ServiceConfig, services ...gosrv.GoService) {
 
 	// Init config
 	err := gocfg.Init(cfg, serviceName)
 	if err != nil {
 		fmt.Println("Run application: load config error: ", err)
-		return err
+		return
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -22,9 +22,7 @@ func Run(serviceName string, cfg gocfg.ServiceConfig, services ...gosrv.GoServic
 	for _, service := range services {
 		if err := service.Init(ctx, cfg); err != nil {
 			fmt.Println("Run application: init service error: ", err)
-			return err
+			return
 		}
 	}
-	
-	return nil
 }
