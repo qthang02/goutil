@@ -6,11 +6,13 @@ type ServiceConfig interface {
 	GetEnvironment() string
 	GetServiceName() string
 	SetServiceName(string)
+	GetGrpc() GrpcConfig
 }
 
 type BaseConfig struct {
-	Environment string `json:"environment,omitempty"`
-	ServiceName string `json:"serviceName,omitempty"`
+	Environment string     `json:"environment,omitempty"`
+	ServiceName string     `json:"serviceName,omitempty"`
+	Grpc        GrpcConfig `json:"grpc,omitempty"`
 }
 
 func (bc *BaseConfig) GetEnvironment() string {
@@ -40,4 +42,12 @@ func (bc *BaseConfig) SetServiceName(name string) {
 	}
 
 	bc.ServiceName = bc.Environment + "." + name
+}
+
+func (bc *BaseConfig) GetGrpc() GrpcConfig {
+	if bc != nil {
+		return bc.Grpc
+	}
+
+	return GrpcConfig{}
 }

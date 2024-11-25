@@ -1,5 +1,7 @@
 {
   "environment": "dev",
-  "serviceName": "dsdsdd",
-  "testConfig": "test config"
+  "testConfig": "test config",
+  "grpc": {
+    "listen": ":5000"
+  }
 }
