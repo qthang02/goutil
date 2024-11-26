@@ -5,12 +5,13 @@ import (
 	"fmt"
 	gocfg "github.com/qthang02/goutil/config"
 	gocopier "github.com/qthang02/goutil/copier"
-	grpcServer "github.com/qthang02/goutil/grpc/server"
+	grpcServer "github.com/qthang02/goutil/grpc/goserver"
 )
 
 type GrpcService struct {
 	cfg    *gocfg.BaseConfig
 	server *grpcServer.GrpcServer
+	opts   []grpcServer.ServerOption
 }
 
 func NewGrpcService() *GrpcService {
@@ -36,6 +37,20 @@ func (srv *GrpcService) Init(ctx context.Context, cfg gocfg.ServiceConfig) error
 }
 
 func (srv *GrpcService) Start(ctx context.Context) error {
+	if len(srv.opts) > 0 {
+		srv.opts = append(srv.opts, grpcServer.WithServiceConfig(srv.cfg))
+	} else {
+		srv.opts = []grpcServer.ServerOption{grpcServer.WithServiceConfig(srv.cfg)}
+	}
+
+	server, err := grpcServer.CreateGrpcServer(ctx, srv.opts...)
+	if err != nil {
+		return err
+	}
+
+	srv.server = server
+	fmt.Println("grpc server start: done")
+
 	return nil
 }
 

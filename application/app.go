@@ -25,4 +25,12 @@ func Run(serviceName string, cfg gocfg.ServiceConfig, services ...gosrv.GoServic
 			return
 		}
 	}
+
+	for _, service := range services {
+		if err := service.Start(ctx); err != nil {
+			fmt.Println("Run application: start service error: ", err)
+			return
+		}
+	}
+
 }

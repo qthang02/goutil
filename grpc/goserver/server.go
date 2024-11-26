@@ -1,8 +1,7 @@
-package server
+package goserver
 
 import (
 	"context"
-	"fmt"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
 )
@@ -15,11 +14,6 @@ type GrpcServer struct {
 func (s *GrpcServer) Stop(context context.Context) error {
 	if s == nil {
 		return nil
-	}
-
-	if s.healthServer != nil {
-		fmt.Println("GrpcServerStop: healthcheck to NOT_SERVING")
-		s.healthServer.Shutdown()
 	}
 
 	if s.server != nil {
