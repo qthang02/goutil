@@ -1,0 +1,7 @@
+{
+  "environment": "dev",
+  "testConfig": "test config",
+  "grpc": {
+    "listen": ":5000"
+  }
+}
